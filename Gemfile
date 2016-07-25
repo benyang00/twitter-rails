@@ -47,7 +47,7 @@ end
 
 group :production do
   # install postgres only on production environment = heroku
-  gem 'postgresql'
+  gem 'pg'
 end
 
 
