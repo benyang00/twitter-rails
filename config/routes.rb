@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
-  
-  get 'static_pages/home'
+  root 'static_pages#home'
 
+  # restful routes
+  resources :users
+
+  # static pages routes, not connected to models
+  get 'static_pages/home'
   get 'static_pages/about'
 
-  resources :users
   # root 'application#welcome' # controller#method
 
   # get '/home', to: 'static_pages#home'
