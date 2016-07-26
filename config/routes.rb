@@ -5,8 +5,12 @@ Rails.application.routes.draw do
   resources :users
 
   # static pages routes, not connected to models
-  get 'static_pages/home'
-  get 'static_pages/about'
+  get '/home', to: 'static_pages#home'
+  get '/about', to: 'static_pages#about'
+
+  # NOT THIS WAY
+  ## get 'static_pages/about'
+  ## get 'static_pages/home'
 
   # root 'application#welcome' # controller#method
 
