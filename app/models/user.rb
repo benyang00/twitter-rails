@@ -1,7 +1,17 @@
 class User < ApplicationRecord
-  has_many :posts
+  before_save { email.downcase! }
 
+  # VALIDATION
 
-  def posts
-  end
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
+  validates :name,
+            presence: true,
+            length: { maximum: 5, message: 'Too long yow' }
+
+  validates :email,
+            presence: true,
+            length: { maximum: 50 },
+            format: { with: VALID_EMAIL_REGEX },
+            uniqueness: { case_sensitive: false }
 end
