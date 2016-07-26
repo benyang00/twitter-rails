@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   # static pages routes, not connected to models
   get '/home', to: 'static_pages#home'
   get '/about', to: 'static_pages#about'
+  get '/help', to: 'static_pages#help'
+
+  # get '/users/:id'
 
   # NOT THIS WAY
   ## get 'static_pages/about'
