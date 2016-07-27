@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  before_save { email.downcase! }
+  before_save { self.email.downcase! }
 
   # VALIDATION
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

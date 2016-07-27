@@ -18,9 +18,16 @@
         <li>
           <%= link_to "About", about_path %>
         </li>
-        <li>
-          <%= link_to "Signup", signup_path %>
-        </li>
+
+        <% if logged_in? %>
+          <li>
+              <%= link_to "My page", current_user %>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to "Signup", signup_path %>
+          </li>
+        <% end %>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
