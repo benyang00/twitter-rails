@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   validates :name,
             presence: true,
-            length: { maximum: 5, message: 'Too long yow' }
+            length: { maximum: 50, message: 'Too long yow' }
 
   validates :email,
             presence: true,

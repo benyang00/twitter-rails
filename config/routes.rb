@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'static_pages#home'
 
   # restful routes
-  resources :users
+  resources :users #, only: [:new, :index]
 
   # static pages routes, not connected to models
   get '/home', to: 'static_pages#home'
