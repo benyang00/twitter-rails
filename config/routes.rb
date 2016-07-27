@@ -7,10 +7,10 @@ Rails.application.routes.draw do
   get '/help', to: 'static_pages#help'
 
   # dynamic routes
-  get '/login', to: 'users#new'
+  get '/signup', to: 'users#new'
 
   # restful routes
-  resources :users
+  resources :users, except: [ :new ]
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
