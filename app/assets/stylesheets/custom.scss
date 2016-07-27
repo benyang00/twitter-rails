@@ -1,12 +1,10 @@
-@import "bootstrap-sprockets";
-@import "bootstrap";
-
 $gray-medium-light: #eaeaea;
-$font-family-sans-serif: Georgia, "Times New Roman", Times, serif;
 
-$font-size-base: 20px;
 $navbar-default-color: red;
 $navbar-default-bg: red;
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
 
 /* mixins */
 @mixin box_sizing {
