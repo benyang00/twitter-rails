@@ -5,7 +5,7 @@ module SessionsHelper
     session[:user_id] = user.id
   end
 
-  # Get current user from session id
+  # Get current user from session id, always check from the latest session
   def current_user
     @current_user ||= User.find_by(id: session[:user_id])
   end

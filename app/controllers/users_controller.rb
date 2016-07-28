@@ -1,8 +1,15 @@
 class UsersController < ApplicationController
-  before_action :require_login,  only: [:show, :edit, :update]
-  before_action :set_user,       only: [:show, :edit, :update, :destroy]
-  before_action :correct_user,   only: [:show, :create, :edit, :update]
+  # setting default user, based on the id
+  before_action :set_user,       only:   [:show, :edit, :update, :destroy]
 
+  # check if already logged in
+  before_action :require_login,  only:   [:show, :edit, :update, :destroy]
+
+  # check if correct user
+  before_action :correct_user,   except: [:index, :new, :show]
+
+  # check if needs log out again
+  before_action :require_logout, only: [:new]
 
   # GET /users
   # GET /users.json
@@ -17,11 +24,6 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    if logged_in?
-      flash[:warning] = "You must logged out to create a new user"
-      redirect_to(root_url)
-    end
-    
     @user = User.new
   end
 
@@ -84,20 +86,35 @@ class UsersController < ApplicationController
     end
 
     def require_login
+      #check if the user is logged in or not
       unless logged_in?
-        flash[:danger] = "You must be logged in to access this section"
+        flash[:danger] = "NO WAY JOSE!"
         redirect_to root_url # halts request cycle
       end
     end
 
     # Confirms the correct user.
     def correct_user
-
       @user = User.find(params[:id])
 
       unless current_user?(@user)
-        flash[:warning] = "You are not allowed to enter other people's page"
+        flash[:warning] = "YOU ARE NOT JOSE"
+        redirect_to root_url
+      end
+    end
+
+    def require_logout
+      if logged_in?
+        flash[:warning] = "You must logged out to create a new user"
         redirect_to(root_url)
       end
     end
+
+
+
+
+
+
+
+
 end
