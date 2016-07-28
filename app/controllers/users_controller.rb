@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_login,  only: [:show, :edit, :update]
+  before_action :set_user,       only: [:show, :edit, :update, :destroy]
+  before_action :correct_user,   only: [:show, :create, :edit, :update]
+
 
   # GET /users
   # GET /users.json
@@ -10,11 +13,15 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find( params[:id] )
   end
 
   # GET /users/new
   def new
+    if logged_in?
+      flash[:warning] = "You must logged out to create a new user"
+      redirect_to(root_url)
+    end
+    
     @user = User.new
   end
 
@@ -29,7 +36,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        log_in(@user)
+        flash[:success] = 'User was successfully created.'
+        format.html { redirect_to @user }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -43,7 +52,8 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        flash[:success] = 'User was successfully updated.'
+        format.html { redirect_to @user }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -71,5 +81,23 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def require_login
+      unless logged_in?
+        flash[:danger] = "You must be logged in to access this section"
+        redirect_to root_url # halts request cycle
+      end
+    end
+
+    # Confirms the correct user.
+    def correct_user
+
+      @user = User.find(params[:id])
+
+      unless current_user?(@user)
+        flash[:warning] = "You are not allowed to enter other people's page"
+        redirect_to(root_url)
+      end
     end
 end
