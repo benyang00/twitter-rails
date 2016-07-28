@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :require_login,  only:   [:show, :edit, :update, :destroy]
 
   # check if correct user
-  before_action :correct_user,   except: [:index, :new, :show]
+  before_action :correct_user,   only:   [:edit, :update, :destroy]
 
   # check if needs log out again
   before_action :require_logout, only: [:new]
