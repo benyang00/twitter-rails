@@ -20,7 +20,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out
+    log_out if logged_in?
+    # add flash after log out
+    flash[:info] = 'Bye bye'
     redirect_to root_url
   end
 end
