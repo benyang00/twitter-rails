@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  has_many :posts, dependent: :destroy
+  default_scope -> { order(created_at: :desc) }
+
   before_save { self.email.downcase! }
 
   # VALIDATION
